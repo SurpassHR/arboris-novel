@@ -16,162 +16,162 @@ class Settings(BaseSettings):
     debug: bool = Field(default=True, description="是否开启调试模式")
     allow_registration: bool = Field(
         default=True,
-        env="ALLOW_USER_REGISTRATION",
+        alias="ALLOW_USER_REGISTRATION",
         description="是否允许用户自助注册",
     )
     logging_level: str = Field(
         default="INFO",
-        env="LOGGING_LEVEL",
+        alias="LOGGING_LEVEL",
         description="应用日志级别",
     )
     enable_linuxdo_login: bool = Field(
         default=False,
-        env="ENABLE_LINUXDO_LOGIN",
+        alias="ENABLE_LINUXDO_LOGIN",
         description="是否启用 Linux.do OAuth 登录",
     )
 
     # -------------------- 安全相关配置 --------------------
-    secret_key: str = Field(..., env="SECRET_KEY", description="JWT 加密密钥")
-    jwt_algorithm: str = Field(default="HS256", env="JWT_ALGORITHM", description="JWT 加密算法")
+    secret_key: str = Field(..., alias="SECRET_KEY", description="JWT 加密密钥")
+    jwt_algorithm: str = Field(default="HS256", alias="JWT_ALGORITHM", description="JWT 加密算法")
     access_token_expire_minutes: int = Field(
         default=60 * 24 * 7,
-        env="ACCESS_TOKEN_EXPIRE_MINUTES",
+        alias="ACCESS_TOKEN_EXPIRE_MINUTES",
         description="访问令牌过期时间，单位分钟"
     )
 
     # -------------------- 数据库配置 --------------------
     database_url: Optional[str] = Field(
         default=None,
-        env="DATABASE_URL",
+        alias="DATABASE_URL",
         description="完整的数据库连接串，填入后覆盖下方数据库配置"
     )
     db_provider: str = Field(
         default="mysql",
-        env="DB_PROVIDER",
+        alias="DB_PROVIDER",
         description="数据库类型，仅支持 mysql 或 sqlite"
     )
-    mysql_host: str = Field(default="localhost", env="MYSQL_HOST", description="MySQL 主机名")
-    mysql_port: int = Field(default=3306, env="MYSQL_PORT", description="MySQL 端口")
-    mysql_user: str = Field(default="root", env="MYSQL_USER", description="MySQL 用户名")
-    mysql_password: str = Field(default="", env="MYSQL_PASSWORD", description="MySQL 密码")
-    mysql_database: str = Field(default="arboris", env="MYSQL_DATABASE", description="MySQL 数据库名称")
+    mysql_host: str = Field(default="localhost", alias="MYSQL_HOST", description="MySQL 主机名")
+    mysql_port: int = Field(default=3306, alias="MYSQL_PORT", description="MySQL 端口")
+    mysql_user: str = Field(default="root", alias="MYSQL_USER", description="MySQL 用户名")
+    mysql_password: str = Field(default="", alias="MYSQL_PASSWORD", description="MySQL 密码")
+    mysql_database: str = Field(default="arboris", alias="MYSQL_DATABASE", description="MySQL 数据库名称")
 
     # -------------------- 管理员初始化配置 --------------------
-    admin_default_username: str = Field(default="admin", env="ADMIN_DEFAULT_USERNAME", description="默认管理员用户名")
-    admin_default_password: str = Field(default="ChangeMe123!", env="ADMIN_DEFAULT_PASSWORD", description="默认管理员密码")
-    admin_default_email: Optional[str] = Field(default=None, env="ADMIN_DEFAULT_EMAIL", description="默认管理员邮箱")
+    admin_default_username: str = Field(default="admin", alias="ADMIN_DEFAULT_USERNAME", description="默认管理员用户名")
+    admin_default_password: str = Field(default="ChangeMe123!", alias="ADMIN_DEFAULT_PASSWORD", description="默认管理员密码")
+    admin_default_email: Optional[str] = Field(default=None, alias="ADMIN_DEFAULT_EMAIL", description="默认管理员邮箱")
 
     # -------------------- LLM 相关配置 --------------------
-    openai_api_key: Optional[str] = Field(default=None, env="OPENAI_API_KEY", description="默认的 LLM API Key")
+    openai_api_key: Optional[str] = Field(default=None, alias="OPENAI_API_KEY", description="默认的 LLM API Key")
     openai_base_url: Optional[HttpUrl] = Field(
         default=None,
-        env="OPENAI_API_BASE_URL",
+        alias="OPENAI_API_BASE_URL",
         validation_alias=AliasChoices("OPENAI_API_BASE_URL", "OPENAI_BASE_URL"),
         description="LLM API Base URL",
     )
-    openai_model_name: str = Field(default="gpt-4o-mini", env="OPENAI_MODEL_NAME", description="默认 LLM 模型名称")
+    openai_model_name: str = Field(default="gpt-4o-mini", alias="OPENAI_MODEL_NAME", description="默认 LLM 模型名称")
     writer_chapter_versions: int = Field(
         default=2,
         ge=1,
-        env="WRITER_CHAPTER_VERSION_COUNT",
+        alias="WRITER_CHAPTER_VERSION_COUNT",
         validation_alias=AliasChoices("WRITER_CHAPTER_VERSION_COUNT", "WRITER_CHAPTER_VERSIONS"),
         description="每次生成章节的候选版本数量",
     )
     embedding_provider: str = Field(
         default="openai",
-        env="EMBEDDING_PROVIDER",
+        alias="EMBEDDING_PROVIDER",
         description="嵌入模型提供方，支持 openai 或 ollama",
     )
     embedding_base_url: Optional[AnyUrl] = Field(
         default=None,
-        env="EMBEDDING_BASE_URL",
+        alias="EMBEDDING_BASE_URL",
         description="嵌入模型使用的 Base URL",
     )
     embedding_api_key: Optional[str] = Field(
         default=None,
-        env="EMBEDDING_API_KEY",
+        alias="EMBEDDING_API_KEY",
         description="嵌入模型专用 API Key",
     )
     embedding_model: str = Field(
         default="text-embedding-3-large",
-        env="EMBEDDING_MODEL",
+        alias="EMBEDDING_MODEL",
         validation_alias=AliasChoices("EMBEDDING_MODEL", "VECTOR_EMBEDDING_MODEL"),
         description="默认的嵌入模型名称",
     )
     embedding_model_vector_size: Optional[int] = Field(
         default=None,
-        env="EMBEDDING_MODEL_VECTOR_SIZE",
+        alias="EMBEDDING_MODEL_VECTOR_SIZE",
         description="嵌入向量维度，未配置时将自动检测",
     )
     ollama_embedding_base_url: Optional[AnyUrl] = Field(
         default=None,
-        env="OLLAMA_EMBEDDING_BASE_URL",
+        alias="OLLAMA_EMBEDDING_BASE_URL",
         description="Ollama 嵌入模型服务地址",
     )
     ollama_embedding_model: str = Field(
         default="nomic-embed-text:latest",
-        env="OLLAMA_EMBEDDING_MODEL",
+        alias="OLLAMA_EMBEDDING_MODEL",
         description="Ollama 嵌入模型名称",
     )
     vector_db_url: Optional[str] = Field(
         default=None,
-        env="VECTOR_DB_URL",
+        alias="VECTOR_DB_URL",
         description="libsql 向量库连接地址",
     )
     vector_db_auth_token: Optional[str] = Field(
         default=None,
-        env="VECTOR_DB_AUTH_TOKEN",
+        alias="VECTOR_DB_AUTH_TOKEN",
         description="libsql 访问令牌",
     )
     vector_top_k_chunks: int = Field(
         default=5,
         ge=0,
-        env="VECTOR_TOP_K_CHUNKS",
+        alias="VECTOR_TOP_K_CHUNKS",
         description="剧情 chunk 检索条数",
     )
     vector_top_k_summaries: int = Field(
         default=3,
         ge=0,
-        env="VECTOR_TOP_K_SUMMARIES",
+        alias="VECTOR_TOP_K_SUMMARIES",
         description="章节摘要检索条数",
     )
     vector_chunk_size: int = Field(
         default=480,
         ge=128,
-        env="VECTOR_CHUNK_SIZE",
+        alias="VECTOR_CHUNK_SIZE",
         description="章节分块的目标字数",
     )
     vector_chunk_overlap: int = Field(
         default=120,
         ge=0,
-        env="VECTOR_CHUNK_OVERLAP",
+        alias="VECTOR_CHUNK_OVERLAP",
         description="章节分块重叠字数",
     )
 
     # -------------------- Linux.do OAuth 配置 --------------------
-    linuxdo_client_id: Optional[str] = Field(default=None, env="LINUXDO_CLIENT_ID", description="Linux.do OAuth Client ID")
+    linuxdo_client_id: Optional[str] = Field(default=None, alias="LINUXDO_CLIENT_ID", description="Linux.do OAuth Client ID")
     linuxdo_client_secret: Optional[str] = Field(
-        default=None, env="LINUXDO_CLIENT_SECRET", description="Linux.do OAuth Client Secret"
+        default=None, alias="LINUXDO_CLIENT_SECRET", description="Linux.do OAuth Client Secret"
     )
     linuxdo_redirect_uri: Optional[HttpUrl] = Field(
-        default=None, env="LINUXDO_REDIRECT_URI", description="Linux.do OAuth 回调地址"
+        default=None, alias="LINUXDO_REDIRECT_URI", description="Linux.do OAuth 回调地址"
     )
     linuxdo_auth_url: Optional[HttpUrl] = Field(
-        default=None, env="LINUXDO_AUTH_URL", description="Linux.do OAuth 授权地址"
+        default=None, alias="LINUXDO_AUTH_URL", description="Linux.do OAuth 授权地址"
     )
     linuxdo_token_url: Optional[HttpUrl] = Field(
-        default=None, env="LINUXDO_TOKEN_URL", description="Linux.do OAuth Token 获取地址"
+        default=None, alias="LINUXDO_TOKEN_URL", description="Linux.do OAuth Token 获取地址"
     )
     linuxdo_user_info_url: Optional[HttpUrl] = Field(
-        default=None, env="LINUXDO_USER_INFO_URL", description="Linux.do 用户信息接口地址"
+        default=None, alias="LINUXDO_USER_INFO_URL", description="Linux.do 用户信息接口地址"
     )
 
     # -------------------- 邮件配置 --------------------
-    smtp_server: Optional[str] = Field(default=None, env="SMTP_SERVER", description="SMTP 服务地址")
-    smtp_port: int = Field(default=587, env="SMTP_PORT", description="SMTP 服务端口")
-    smtp_username: Optional[str] = Field(default=None, env="SMTP_USERNAME", description="SMTP 登录用户名")
-    smtp_password: Optional[str] = Field(default=None, env="SMTP_PASSWORD", description="SMTP 登录密码")
-    email_from: Optional[str] = Field(default=None, env="EMAIL_FROM", description="邮件发送方显示名或邮箱")
+    smtp_server: Optional[str] = Field(default=None, alias="SMTP_SERVER", description="SMTP 服务地址")
+    smtp_port: int = Field(default=587, alias="SMTP_PORT", description="SMTP 服务端口")
+    smtp_username: Optional[str] = Field(default=None, alias="SMTP_USERNAME", description="SMTP 登录用户名")
+    smtp_password: Optional[str] = Field(default=None, alias="SMTP_PASSWORD", description="SMTP 登录密码")
+    email_from: Optional[str] = Field(default=None, alias="EMAIL_FROM", description="邮件发送方显示名或邮箱")
 
     model_config = SettingsConfigDict(
         env_file=("new-backend/.env", ".env", "backend/.env"),

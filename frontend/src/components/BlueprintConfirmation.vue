@@ -3,7 +3,7 @@
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">信息收集完成！</h2>
 
     <div class="text-center mb-8">
-      <div 
+      <div
         class="prose prose-lg prose-gray max-w-none mx-auto mb-4 text-gray-600"
         v-html="renderedAiMessage"
       ></div>
@@ -67,10 +67,10 @@
 
         <!-- 进度条 -->
         <div class="w-full max-w-md mx-auto">
-          <!-- <div class="flex justify-between text-xs text-gray-500 mb-2">
+          <div class="flex justify-between text-xs text-gray-500 mb-2">
             <span>生成进度</span>
             <span>{{ Math.round(progress) }}%</span>
-          </div> -->
+          </div>
           <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
             <div
               class="h-2 rounded-full transition-all duration-1000 ease-out relative"
@@ -84,9 +84,9 @@
         </div>
 
         <!-- 倒计时 -->
-        <!-- <div class="text-sm text-gray-500">
+        <div class="text-sm text-gray-500">
           <span>预计完成时间: {{ timeRemaining }}秒</span>
-        </div> -->
+        </div>
 
         <!-- 温馨提示 -->
         <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
@@ -102,12 +102,12 @@
 
     <!-- 操作按钮 -->
     <div v-else class="text-center space-x-4">
-      <!-- <button
+      <button
         @click="$emit('back')"
         class="bg-gray-200 text-gray-700 font-bold py-3 px-8 rounded-full hover:bg-gray-300 transition-all duration-300 transform hover:scale-105"
       >
         返回对话
-      </button> -->
+      </button>
       <button
         @click="generateBlueprint"
         :disabled="isGenerating"
